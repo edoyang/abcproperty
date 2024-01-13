@@ -36,12 +36,12 @@ const listingSchema = new mongoose.Schema({
 const Listing = mongoose.model('Listing', listingSchema, 'properties');
 
 // Middleware
-app.use(cors(
-  {origin: ["https://abcproperty.vercel.app/", "https://abcproperty-admin.vercel.app/"],
-  methods: ["GET", "POST"],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']}
-  ));
+app.use(cors({
+  origin: ["https://abcproperty.vercel.app", "https://abcproperty-admin.vercel.app"], // Removed the trailing slashes
+  methods: ["GET", "POST", "OPTIONS"], // Added OPTIONS because it's part of the preflight request
+  credentials: true, // This should be set to true if you are sending credentials like cookies, and the Access-Control-Allow-Credentials header will be set to true.
+  allowedHeaders: ['Content-Type', 'Authorization'] // Make sure this list includes all headers your client might send.
+}));
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));

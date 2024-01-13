@@ -151,7 +151,7 @@
     <script src="dropdown.js"></script>
     <script>
         function fetchListings() {
-          fetch('http://localhost:5000/api/listings') // Fetch from the backend server
+          fetch('https://abc-server-two.vercel.app/api/listings') // Fetch from the backend server
             .then(response => {
               if (!response.ok) {
                 throw new Error('Network response was not ok.');
@@ -167,7 +167,7 @@
                 card.className = 'card';
                 
                 // Prepend the backend server's base URL to the image path
-                const imagePath = listing.thumbnail_image ? `http://localhost:5000/${listing.thumbnail_image}` : 'assets/no-image.png';
+                const imagePath = listing.thumbnail_image ? `https://abc-server-two.vercel.app/${listing.thumbnail_image}` : 'assets/no-image.png';
                 
                 // Make sure 'price' is a property in your listing object
                 const price = listing.price ? `${listing.price}€` : 'Price not available';

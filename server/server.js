@@ -37,7 +37,7 @@ const Listing = mongoose.model('Listing', listingSchema, 'properties');
 
 // Middleware
 app.use(cors({
-  origin:["https://abcpropertymanagement.vercel.app/"],
+  origin:["https://abcproperty.vercel.app/","https://abcproperty-admin.vercel.app/"],
   methods:["GET","POST"],
   credentials: true
 }));
@@ -132,6 +132,12 @@ app.get('/api/listings', async (req, res) => {
   }
 });
 
-app.listen(5000, () => {
-  console.log('Server is running on http://localhost:5000');
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
 });

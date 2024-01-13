@@ -37,10 +37,10 @@ const Listing = mongoose.model('Listing', listingSchema, 'properties');
 
 // Middleware
 app.use(cors(
-  // {origin: ["https://abcproperty.vercel.app/", "https://abcproperty-admin.vercel.app/"],
-  // methods: ["GET", "POST"],
-  // credentials: true,
-  // allowedHeaders: ['Content-Type', 'Authorization']}
+  {origin: ["https://abcproperty.vercel.app/", "https://abcproperty-admin.vercel.app/"],
+  methods: ["GET", "POST"],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']}
   ));
 
 app.use(bodyParser.json());

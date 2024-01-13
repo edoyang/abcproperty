@@ -57,7 +57,7 @@
       formData.set('balcony', formData.has('balcony'));
       formData.set('terrace', formData.has('terrace'));
   
-      fetch('http://localhost:5000/api/listings', {
+      fetch('https://abc-server-two.vercel.app/api/listings', { // Use your deployed server's URL
         method: 'POST',
         body: formData
       })

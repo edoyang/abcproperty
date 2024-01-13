@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Listing Management</title>
+</head>
+<body>
+
+  <script>
+    if (!sessionStorage.getItem('isLoggedIn')) {
+      window.location.href = 'index.html';
+    }
+  </script>
+
+  <form id="listingForm" enctype="multipart/form-data">
+    <input type="file" id="thumbnail_image" name="thumbnail_image" required>
+    <input type="file" id="properties_image" name="properties_image" multiple required>
+    <input type="text" id="city" name="city" placeholder="City" required>
+    <input type="text" id="street" name="street" placeholder="Street" required>
+    <select id="type" name="type" required>
+      <option value="">--Select Property Type--</option>
+      <option value="apartment">Apartment</option>
+      <option value="house">House</option>
+      <option value="office">Office</option>
+      <option value="land">Land</option>
+    </select>
+    <input type="number" id="mortgage" name="mortgage" placeholder="Mortgage Price/Month" min="0" step="0.01" required>
+    <input type="text" id="title" name="title" placeholder="Title" required>
+    <input type="number" id="price" name="price" placeholder="Price" min="0" step="0.01" required>
+    <select id="sellType" name="sellType" required>
+      <option value="">--Select Sell Type--</option>
+      <option value="rent">Rent</option>
+      <option value="sale">Sale</option>
+    </select>
+    <input type="number" id="bedrooms" name="bedrooms" placeholder="Bedrooms" min="0" required>
+    <input type="number" id="unitSize" name="unitSize" placeholder="Unit Size" min="0" step="0.01" required>
+    <label>
+      <input type="checkbox" id="garage" name="garage"> Garage
+    </label>
+    <label>
+      <input type="checkbox" id="balcony" name="balcony"> Balcony
+    </label>
+    <label>
+      <input type="checkbox" id="terrace" name="terrace"> Terrace
+    </label>
+    <input type="text" id="background" name="background" placeholder="Background">
+    <textarea id="description" name="description" placeholder="Description" required></textarea>
+    <button type="submit">Submit Listing</button>
+  </form>
+
+  <script>
+    document.getElementById('listingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+  
+      const formData = new FormData(e.target);
+  
+      formData.set('garage', formData.has('garage'));
+      formData.set('balcony', formData.has('balcony'));
+      formData.set('terrace', formData.has('terrace'));
+  
+      fetch('http://localhost:5000/api/listings', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+        return response.json();
+      })
+      .then(data => {
+        alert('Listing submitted successfully');
+        e.target.reset();
+      })
+      .catch(error => {
+        alert('An error occurred while submitting the listing.');
+        console.error('Error:', error);
+      });
+    });
+  </script>  
+</body>
+</html>

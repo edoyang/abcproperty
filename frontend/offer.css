@@ -1,0 +1,68 @@
+.hero{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--padding-lg) 0;
+}
+
+.hero .filter{
+    display: flex;
+    flex-direction: column;
+    background-color: var(--secondary);
+    width: 100%;
+    padding: var(--padding-md) 0;
+    gap: 30px;
+}
+
+.hero .filter .search-input{
+    display: flex;
+    align-self: center;
+    gap: 10px;
+}
+
+
+.filter-settings{
+    display: flex;
+    align-self: center;
+}
+
+
+
+
+
+
+
+
+
+
+.line-with-text {
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+.line-with-text span {
+    background-color: var(--secondary); /* Match the background color */
+    padding: 0 30px; /* Adjust the horizontal spacing around the text */
+    position: relative;
+    z-index: 1; /* Ensures the text appears above the line */
+}
+
+.line-with-text:before,
+.line-with-text:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 1px; /* Adjust the thickness of the line here */
+    background: var(--accent-light); /* Adjust the color of the line here */
+}
+
+.line-with-text:before {
+    left: 0;
+}
+
+.line-with-text:after {
+    right: 0;
+}

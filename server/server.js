@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-const path = require('path'); // Added to handle file paths
+const path = require('path');
 const app = express();
 
 // Connect to MongoDB
@@ -37,8 +37,8 @@ const Listing = mongoose.model('Listing', listingSchema, 'properties');
 
 // Middleware
 app.use(cors({
-  origin:["https://abcproperty.vercel.app/","https://abcproperty-admin.vercel.app/"],
-  methods:["GET","POST"],
+  origin: ["https://abcproperty.vercel.app/", "https://abcproperty-admin.vercel.app/"],
+  methods: ["GET", "POST"],
   credentials: true
 }));
 
@@ -48,7 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Multer for image uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'public/images')); // Save files within public/images
+    cb(null, path.join(__dirname, 'public/images'));
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + '-' + file.originalname);
@@ -57,10 +57,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 const uploadFields = [
   { name: 'thumbnail_image', maxCount: 1 },
-  { name: 'properties_image', maxCount: 10 }, // Adjust maxCount as needed
+  { name: 'properties_image', maxCount: 10 }
 ];
 
-// Routes
 app.post('/api/login', async (req, res) => {
   const { usernameOrEmail, password } = req.body;
   try {
@@ -132,12 +131,13 @@ app.get('/api/listings', async (req, res) => {
   }
 });
 
+app.use((err, req, res, next) => {
+  console.error('Error:', err.stack);
+  res.status(500).send('Internal Server Error');
+});
+
+// Start the server
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
 });

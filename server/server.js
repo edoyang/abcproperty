@@ -78,8 +78,10 @@ app.post('/api/login', async (req, res) => {
 });
 
 app.post('/api/listings', upload.fields(uploadFields), async (req, res) => {
-  const { city, street, type, mortgage, title, price, sellType, bedrooms, unitSize, garage, balcony, terrace, background, description } = req.body;
-  const thumbnail_image = req.files['thumbnail_image'] ? req.files['thumbnail_image'][0].path.replace('public/', '') : null;
+  if (!req.files || !req.files['thumbnail_image']) {
+    return res.status(400).json({ status: 'error', message: 'No files were uploaded.' });
+  }
+  const thumbnail_image = req.files['thumbnail_image'][0].path.replace('public/', '');
   const properties_image = req.files['properties_image'] ? req.files['properties_image'].map(file => file.path.replace('public/', '')) : [];
 
   try {

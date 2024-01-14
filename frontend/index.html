@@ -151,7 +151,7 @@
     <script src="dropdown.js"></script>
     <script>
         function fetchListings() {
-          fetch('https://abc-server-two.vercel.app/api/listings') // Fetch from the backend server
+          fetch('https://abc-server-two.vercel.app/api/listings')
             .then(response => {
               if (!response.ok) {
                 throw new Error('Network response was not ok.');
@@ -160,20 +160,16 @@
             })
             .then(data => {
               const carousel = document.querySelector('.carousel');
-              carousel.innerHTML = ''; // Clear any existing content
+              carousel.innerHTML = '';
       
               data.forEach(listing => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 
-                // Prepend the backend server's base URL to the image path
-                const imagePath = listing.thumbnail_image ? `https://abc-server-two.vercel.app/${listing.thumbnail_image}` : 'assets/no-image.png';
-                
-                // Make sure 'price' is a property in your listing object
                 const price = listing.price ? `${listing.price}€` : 'Price not available';
       
                 card.innerHTML = `
-                  <img src="${imagePath}" alt="${listing.title}">
+                  <img src="${listing.thumbnail_image}" alt="${listing.title}">
                   <h1>${listing.title}</h1>
                   <div class="card-footer">
                     <p>${price}</p>
@@ -190,6 +186,6 @@
         }
       
         document.addEventListener('DOMContentLoaded', fetchListings);
-      </script>        
+      </script>      
 </body>
 </html>

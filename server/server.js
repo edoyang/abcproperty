@@ -1,10 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
-const path = require('path');
 const app = express();
 
 // Connect to MongoDB
@@ -16,12 +14,12 @@ const Admin = mongoose.model('Admin', adminSchema, 'admin');
 
 // Listing Model
 const listingSchema = new mongoose.Schema({
-  thumbnail_image: String,
-  properties_image: [String],
+  thumbnail_image: String, // This will store Base64 encoded image string
+  properties_image: [String], // This will store an array of Base64 encoded image strings
   city: String,
   street: String,
   type: { type: String, enum: ['apartment', 'house', 'office', 'land'] },
-  mortgage: Number, // Assuming this is a number representing the price per month
+  mortgage: Number,
   title: String,
   price: Number,
   sellType: String,
@@ -37,30 +35,15 @@ const Listing = mongoose.model('Listing', listingSchema, 'properties');
 
 // Middleware
 app.use(cors({
-  origin: ["https://abcproperty.vercel.app", "https://abcproperty-admin.vercel.app"], // Removed the trailing slashes
-  methods: ["GET", "POST", "OPTIONS"], // Added OPTIONS because it's part of the preflight request
-  credentials: true, // This should be set to true if you are sending credentials like cookies, and the Access-Control-Allow-Credentials header will be set to true.
-  allowedHeaders: ['Content-Type', 'Authorization'] // Make sure this list includes all headers your client might send.
+  origin: ["https://abcproperty.vercel.app", "https://abcproperty-admin.vercel.app"],
+  methods: ["GET", "POST", "OPTIONS"],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
 
-// Multer for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, 'public/images'));
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + '-' + file.originalname);
-  },
-});
-const upload = multer({ storage: storage });
-const uploadFields = [
-  { name: 'thumbnail_image', maxCount: 1 },
-  { name: 'properties_image', maxCount: 10 }
-];
-
+// Admin login endpoint
 app.post('/api/login', async (req, res) => {
   const { usernameOrEmail, password } = req.body;
   try {
@@ -77,12 +60,30 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-app.post('/api/listings', upload.fields(uploadFields), async (req, res) => {
-  if (!req.files || !req.files['thumbnail_image']) {
-    return res.status(400).json({ status: 'error', message: 'No files were uploaded.' });
+// Listing creation endpoint
+app.post('/api/listings', async (req, res) => {
+  const {
+    thumbnail_image, // Base64 string
+    properties_image, // Array of Base64 strings
+    city,
+    street,
+    type,
+    mortgage,
+    title,
+    price,
+    sellType,
+    bedrooms,
+    unitSize,
+    garage,
+    balcony,
+    terrace,
+    background,
+    description
+  } = req.body;
+
+  if (!thumbnail_image) {
+    return res.status(400).json({ status: 'error', message: 'Thumbnail image is required.' });
   }
-  const thumbnail_image = req.files['thumbnail_image'][0].path.replace('public/', '');
-  const properties_image = req.files['properties_image'] ? req.files['properties_image'].map(file => file.path.replace('public/', '')) : [];
 
   try {
     const newListing = new Listing({
@@ -111,29 +112,18 @@ app.post('/api/listings', upload.fields(uploadFields), async (req, res) => {
   }
 });
 
+// Listing retrieval endpoint
 app.get('/api/listings', async (req, res) => {
   try {
     const listings = await Listing.find({});
-    const updatedListings = listings.map(listing => {
-      if (listing.thumbnail_image) {
-        // Ensure the path is correct
-        listing.thumbnail_image = '/images/' + path.basename(listing.thumbnail_image);
-      }
-      if (listing.properties_image) {
-        // Do the same for property images
-        listing.properties_image = listing.properties_image.map(image =>
-          '/images/' + path.basename(image)
-        );
-      }
-      return listing;
-    });
-    res.json(updatedListings);
+    res.json(listings);
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: 'error', message: 'Internal server error' });
   }
 });
 
+// Global error handler
 app.use((err, req, res, next) => {
   console.error('Error:', err.stack);
   res.status(500).send('Internal Server Error');

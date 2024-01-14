@@ -48,18 +48,56 @@
   </form>
 
   <script>
-    document.getElementById('listingForm').addEventListener('submit', function(e) {
+    function getBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+    }
+  
+    async function convertImagesToBase64(form) {
+      const thumbnailImage = form.querySelector('#thumbnail_image').files[0];
+      const propertyImages = Array.from(form.querySelector('#properties_image').files);
+  
+      const thumbnailImageBase64 = await getBase64(thumbnailImage);
+      const propertyImagesBase64 = await Promise.all(propertyImages.map(file => getBase64(file)));
+  
+      return { thumbnailImageBase64, propertyImagesBase64 };
+    }
+  
+    document.getElementById('listingForm').addEventListener('submit', async function(e) {
       e.preventDefault();
   
-      const formData = new FormData(e.target);
+      const form = e.target;
+      const { thumbnailImageBase64, propertyImagesBase64 } = await convertImagesToBase64(form);
   
-      formData.set('garage', formData.has('garage'));
-      formData.set('balcony', formData.has('balcony'));
-      formData.set('terrace', formData.has('terrace'));
+      const listingData = {
+        thumbnail_image: thumbnailImageBase64,
+        properties_image: propertyImagesBase64,
+        city: form.city.value,
+        street: form.street.value,
+        type: form.type.value,
+        mortgage: form.mortgage.value,
+        title: form.title.value,
+        price: form.price.value,
+        sellType: form.sellType.value,
+        bedrooms: form.bedrooms.value,
+        unitSize: form.unitSize.value,
+        garage: form.garage.checked,
+        balcony: form.balcony.checked,
+        terrace: form.terrace.checked,
+        background: form.background.value,
+        description: form.description.value
+      };
   
-      fetch('https://abc-server-two.vercel.app/api/listings', { // Use your deployed server's URL
+      fetch('https://abc-server-two.vercel.app/api/listings', { 
         method: 'POST',
-        body: formData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(listingData)
       })
       .then(response => {
         if (!response.ok) {
@@ -69,7 +107,7 @@
       })
       .then(data => {
         alert('Listing submitted successfully');
-        e.target.reset();
+        form.reset();
       })
       .catch(error => {
         alert('An error occurred while submitting the listing.');

@@ -266,7 +266,7 @@ footer .logo{
     height: max-content;
 }
 
-.card p{
+.card .card-footer{
     height: 85px;
 }
 

@@ -263,7 +263,11 @@ footer .logo{
 }
 
 .card h1{
-    height: 54px;
+    height: max-content;
+}
+
+.card p{
+    height: 85px;
 }
 
 .card h1, .card .card-footer{

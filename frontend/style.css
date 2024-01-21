@@ -274,10 +274,42 @@ footer .logo{
     padding: 0 var(--padding-sm);
 }
 
-
 .loading img{
     background-color: gray;
     animation: loading 2s infinite;
+}
+
+.loading-banner{
+    position: absolute;
+    box-shadow: 5px 5px 10px #00000030;
+    padding: 10px var(--padding-md);
+}
+
+.hamburger {
+    display: none;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 3px;
+    margin-bottom: 5px;
+    background-color: black;
+    transition: all 0.3s ease-in-out;
+}
+
+.hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
 }
 
 @keyframes loading{
@@ -307,6 +339,62 @@ footer .logo{
     height: 40px;
     width: 100px;
 }
+
+.contact-us-menu{
+    display: none;
+}
+
+@media screen and (max-width: 1024px) {
+    /* NAVBAR RESPONSIVE */
+    nav .navbar .menu{
+        display: none;
+    }
+
+    .contact-us-button{
+        display: none;
+    }
+
+    nav .navbar .menu.active {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        top: 0;
+        right: 0;
+        background-color: white;
+        height: 100svh;
+        width: 40vw;
+        justify-content: center;
+        align-items: center;
+        gap: 50px;
+    }
+
+    .hamburger{
+        display: block;
+    }
+
+    .contact-us-menu{
+        display: block;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @media screen and (min-width: 768px){
     .secondary-button:hover {

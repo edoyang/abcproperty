@@ -30,10 +30,12 @@
 
 .unit-list{
     display: grid;
+    position: relative;
     padding: var(--padding-lg);
     justify-items: center;
     grid-template-columns: repeat(3, 300px);
     justify-content: space-between;
+    text-align: center;
 }
 
 

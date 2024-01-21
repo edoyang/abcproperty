@@ -11,6 +11,11 @@
     <nav>
         <div class="navbar">
             <a href="index.html"><img src="assets/nav-brand.svg" alt="nav"></a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <div class="menu">
                 <li><a href="index.html#top-offers">Top offers</a></li>
                 <li><a href="offer.html">Search in offers</a></li>
@@ -18,7 +23,7 @@
                 <li><a href="index.html#about-us">About Us</a></li>
                 <li><a href="index.html#our-team">Our Team</a></li>
             </div>
-            <a class="primary-button" href="">Contact us</a>
+            <a class="primary-button contact-us-button" href="">Contact us</a>
         </div>
     </nav>
     <section class="hero">
@@ -99,7 +104,9 @@
         </div>
     </section>
     <section class="unit-list">
-        Enter unit here
+        <div class="loading-banner">
+            Loading ...
+        </div>
     </section>
     <footer>
         <div class="subscribe">
@@ -118,6 +125,7 @@
         </div>
     </footer>
     <script src="dropdown.js"></script>
+    <script src="navbar.js"></script>
     <script>
         function fetchListings() {
           fetch('https://abc-server-two.vercel.app/api/listings')

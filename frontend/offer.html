@@ -118,5 +118,43 @@
         </div>
     </footer>
     <script src="dropdown.js"></script>
+    <script>
+        function fetchListings() {
+          fetch('https://abc-server-two.vercel.app/api/listings')
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok.');
+              }
+              return response.json();
+            })
+            .then(data => {
+              const carousel = document.querySelector('.unit-list');
+              carousel.innerHTML = '';
+      
+              data.forEach(listing => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                const price = listing.price ? `${listing.price}€` : 'Price not available';
+      
+                card.innerHTML = `
+                  <img src="${listing.thumbnail_image}" alt="${listing.title}">
+                  <h1>${listing.title}</h1>
+                  <div class="card-footer">
+                    <p>${price}</p>
+                    <p>${listing.city}</p>
+                  </div>
+                `;
+      
+                carousel.appendChild(card);
+              });
+            })
+            .catch(error => {
+              console.error('Error fetching listings:', error);
+            });
+        }
+      
+        document.addEventListener('DOMContentLoaded', fetchListings);
+      </script>     
 </body>
 </html>

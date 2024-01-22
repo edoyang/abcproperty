@@ -269,6 +269,8 @@ footer .logo{
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 .card .card-footer{

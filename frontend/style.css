@@ -236,9 +236,21 @@ footer .logo{
     border-radius: 0 0 4px 4px;
 }
 
-.carousel{
+.carousel {
     display: flex;
     gap: 50px;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding: 10px; /* space for shadow */
+    margin: -10px; /* negate the padding */
+}
+
+.carousel::-webkit-scrollbar {
+    display: none; /* for most web browsers */
+}
+
+.carousel::scrollbar {
+    display: none; /* for IE and Edge */
 }
 
 .card{

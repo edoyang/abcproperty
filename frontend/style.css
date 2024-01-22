@@ -241,6 +241,7 @@ footer .logo{
     gap: 50px;
     overflow-x: auto;
     scroll-behavior: smooth;
+    width: max-content;
     padding: 10px; /* space for shadow */
     margin: -10px; /* negate the padding */
 }

@@ -1,0 +1,82 @@
+@media screen and (max-width: 768px) {
+    :root, body, html{
+        /* PADDING SMALLER */
+        --padding-lg: 50px;
+        --padding-md: 40px;
+        --padding-sm: 20px;
+    }
+
+    .input-box{
+        flex-direction: column;
+    }
+
+    .input-box *{
+        width: 100%;
+    }
+
+    section{
+        height: max-content;
+        position: relative;
+    }
+
+    .hero{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero .right{
+        display: none;
+    }
+
+    .hero .left{
+        text-align: center;
+        justify-content: center;
+    }
+
+    .hero .left .search-property{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .hero .left .search-property > *, .dropdown-content{
+        width: 100%;
+        position: relative;
+    }
+
+    .about-us{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .references .testimonial{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+
+
+
+
+
+    .filter .filter-settings{
+        flex-direction: column;
+        gap: 25px;
+    }
+}
+
+
+@media screen and (max-width: 476px) {
+    :root, body, html {
+        /* PADDING SMALLER */
+        --padding-lg: 30px;
+        --padding-md: 20px;
+        --padding-sm: 10px;
+    }
+
+    nav .navbar .menu.active{
+        width: 60vw;
+    }
+}

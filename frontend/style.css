@@ -209,6 +209,7 @@ footer .logo{
     height: 35px;
     margin: 0 10px;
     cursor: pointer;
+    z-index: 1;
 }
 
 .dropdown-list{
@@ -288,7 +289,7 @@ footer .logo{
 .hamburger {
     display: none;
     cursor: pointer;
-    z-index: 2;
+    z-index: 101;
 }
 
 .hamburger span {
@@ -366,6 +367,7 @@ footer .logo{
         justify-content: center;
         align-items: center;
         gap: 50px;
+        z-index: 100;
     }
 
     .hamburger{

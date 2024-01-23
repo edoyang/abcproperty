@@ -54,9 +54,19 @@
 
 .about-us{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+    "left right"
+    "bot bot";
     gap: 100px;
     padding: var(--padding-lg);
+}
+
+.about-us .left{
+    grid-area: left;
+}
+
+.about-us .right{
+    grid-area: right;
 }
 
 .about-us .left img{
@@ -65,28 +75,34 @@
 }
 
 /* OUR TEAM */
+
+.our-team{
+    grid-area: bot;
+}
+
 .team-member-grid{
     display: grid;
-    grid-template-areas: 
-    "top top desc"
-    "bot bot bot"
-    ;
+    grid-template-columns: repeat(3, auto);
+    justify-content: space-between;
+    width: 100%;
+    gap: 50px;
 }
 
-.team-member-grid .top{
-    grid-area: top;
-    display: grid;
-    grid-auto-flow: column;
+@media screen and (max-width: 1380px){
+    .team-member-grid{
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        justify-items: center;
+    }
 }
 
-.team-member-grid .our-team-description{
-    grid-area: desc;
-}
-
-.team-member-grid .bottom{
-    grid-area: bot;
-    display: grid;
-    grid-auto-flow: column;
+.team-card.our-team-description{
+    border: none;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
 }
 
 /* REFERENCES */

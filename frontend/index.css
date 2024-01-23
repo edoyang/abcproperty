@@ -65,6 +65,29 @@
 }
 
 /* OUR TEAM */
+.team-member-grid{
+    display: grid;
+    grid-template-areas: 
+    "top top desc"
+    "bot bot bot"
+    ;
+}
+
+.team-member-grid .top{
+    grid-area: top;
+    display: grid;
+    grid-auto-flow: column;
+}
+
+.team-member-grid .our-team-description{
+    grid-area: desc;
+}
+
+.team-member-grid .bottom{
+    grid-area: bot;
+    display: grid;
+    grid-auto-flow: column;
+}
 
 /* REFERENCES */
 .references{

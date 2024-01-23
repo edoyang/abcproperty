@@ -255,8 +255,8 @@ footer .logo{
 }
 
 .card{
-    width: 300px;
-    height: 420px;
+    min-width: 300px;
+    min-height: 420px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

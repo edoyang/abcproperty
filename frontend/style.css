@@ -281,7 +281,7 @@ footer .logo{
 }
 
 .card h1{
-    height: 54px;
+    min-height: 54px;
     line-clamp: 2;
     -webkit-line-clamp: 2;
     overflow: hidden;

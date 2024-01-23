@@ -82,6 +82,7 @@
     .unit-list{
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         justify-items: center;
+        grid-template: 50px;
     }
 }
 

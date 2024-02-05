@@ -1,8 +1,8 @@
 @media screen and (max-width: 768px) {
     :root, body, html{
         /* PADDING SMALLER */
-        --padding-lg: 50px;
-        --padding-md: 40px;
+        --padding-lg: 40px;
+        --padding-md: 30px;
         --padding-sm: 20px;
     }
 
@@ -90,8 +90,8 @@
 @media screen and (max-width: 476px) {
     :root, body, html {
         /* PADDING SMALLER */
-        --padding-lg: 30px;
-        --padding-md: 20px;
+        --padding-lg: 20px;
+        --padding-md: 15px;
         --padding-sm: 10px;
     }
 
